@@ -15,8 +15,8 @@ import static org.testng.Assert.*;
 
 public class SelectorService {
 
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    private WebDriver driver;
+    private WebDriverWait wait;
 
     public SelectorService(WebDriver driver) {
         this.driver = driver;
@@ -26,7 +26,7 @@ public class SelectorService {
      * this method makes WebDriver poll the DOM for a certain amount of time when trying to locate an element.
      * @param units time in seconds
      */
-    public void implicit_Wait(int units) {
+    private void implicit_Wait(int units) {
         driver.manage().timeouts().implicitlyWait(units, TimeUnit.SECONDS);
     }
 
@@ -42,7 +42,7 @@ public class SelectorService {
      * this method will wait until the element to be visible by the locator
      * @param units time in seconds
      */
-    protected WebElement visibilityOfElementLocatedBylocator(By locator, int units) //Visibility Of Element Located By Xpath
+    private WebElement visibilityOfElementLocatedBylocator(By locator, int units) //Visibility Of Element Located By Xpath
     {
         wait = new WebDriverWait(driver, units);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -52,7 +52,7 @@ public class SelectorService {
      * this method will wait until the element to be clickable
      * @param locator this could be an attribute of an element
      */
-    protected void waitElementToBeClickable(By locator) {
+    private void waitElementToBeClickable(By locator) {
         wait = new WebDriverWait(driver,LONG_SLEEP_SEC);
         wait.until(ExpectedConditions.elementToBeClickable(locator));
         reportLog("Wait element to be clickable: (" + locator + ")");
@@ -72,7 +72,7 @@ public class SelectorService {
         reportLog("Clicked '" + text + "' using element: (" + locator + ")");
     }
 
-    public void type(By locator, String text) {//Click on field,clear field and enter the text
+    protected void type(By locator, String text) {//Click on field,clear field and enter the text
         String inputFieldText =  visibilityOfElementLocatedBylocator(locator, LONG_SLEEP_SEC).getText();
         driver.findElement(locator).click();
         if(inputFieldText != null) {
@@ -85,10 +85,6 @@ public class SelectorService {
     public String getText(By locator) {
         implicit_Wait(PAGE_LOAD_TIMEOUT);
         return visibilityOfElementLocatedBylocator(locator, PAGE_LOAD_TIMEOUT).getText();
-    }
-
-    public String getAttribute(By locator, String value) {
-        return driver.findElement(locator).getAttribute(value);
     }
 
     protected void selectAnOptionFromDropdown(By locator, int option){
@@ -111,17 +107,14 @@ public class SelectorService {
         }
     }
 
-    protected void assertNumberOfOptionsInDropdown(By locator, String text, int realAmount){
-        reportLog("**** Check "+text+" in dropdown *******");
+    public void assertNumberOfOptionsInDropdown(By locator, String text, int realAmount){
         List<WebElement> optionList = driver.findElement(locator).findElements(By.tagName("option"));
         WebElement element1 = driver.findElement(locator);
         Select select = new Select(element1);
         int numberOfOptions = select.getOptions().size();
-        reportLog("Number of "+text+" --> "+ numberOfOptions);
-        int j=1;
+        reportLog(text + " --> " + numberOfOptions);
         for(WebElement option : optionList){
             reportLog(text+" -->"+" "+ option.getText());
-            j++;
         }
         Assert.assertEquals(numberOfOptions,realAmount);
     }

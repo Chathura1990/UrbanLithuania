@@ -3,7 +3,6 @@ package applicationFiles.testFiles;
 import applicationFiles.app_manager.modelData.CalculatorData;
 import applicationFiles.app_manager.testBase.TestBase;
 import org.openqa.selenium.By;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static applicationFiles.app_manager.ApplicationManager.*;
@@ -43,10 +42,10 @@ public class ParkingCalcPositiveTests extends TestBase {
         int ResponseDelayedBy = 1;
         app.getParkingCalcPage().selectALotFromDropdown(dropdownOption);
         app.getParkingCalcPage().fillOutTheInputFieldsAndClickCalculateButton(calcData
-                .setEntryTime(SHORT_ECO_ENTRY_TIME)
-                .setEntryDate(SHORT_ECO_ENTRY_DATE)
-                .setLeavingTime(SHORT_ECO_EXIT_TIME)
-                .setLeavingDate(SHORT_ECO_EXIT_DATE)
+                .setEntryTime(TIME_12)
+                .setEntryDate(DATE_BY_1_DAY)
+                .setLeavingTime(TIME_12)
+                .setLeavingDate(DATE_BY_2_DAYS)
                 ,ResponseDelayedBy);
         String cost = app.getSelectorService().getText(costSpanField);
         reportLog("Cost for one day: " + cost);
@@ -62,10 +61,10 @@ public class ParkingCalcPositiveTests extends TestBase {
         int ResponseDelayedBy = 1;
         app.getParkingCalcPage().selectALotFromDropdown(dropdownOption);
         app.getParkingCalcPage().fillOutTheInputFieldsAndClickCalculateButton(calcData
-                        .setEntryTime(SHORT_ECO_ENTRY_TIME)
-                        .setEntryDate(SHORT_ECO_ENTRY_DATE)
-                        .setLeavingTime(SHORT_ECO_EXIT_TIME)
-                        .setLeavingDate(SHORT_ECO_EXIT_DATE)
+                        .setEntryTime(TIME_12)
+                        .setEntryDate(DATE_BY_1_DAY)
+                        .setLeavingTime(TIME_12)
+                        .setLeavingDate(DATE_BY_2_DAYS)
                 ,ResponseDelayedBy);
         String cost = app.getSelectorService().getText(costSpanField);
         reportLog("Cost for one day: " + cost);
@@ -81,10 +80,10 @@ public class ParkingCalcPositiveTests extends TestBase {
         int ResponseDelayedBy = 1;
         app.getParkingCalcPage().selectALotFromDropdown(dropdownOption);
         app.getParkingCalcPage().fillOutTheInputFieldsAndClickCalculateButton(calcData
-                        .setEntryTime(LONG_TERM_ENTRY_TIME)
-                        .setEntryDate(LONG_TERM_ENTRY_DATE)
-                        .setLeavingTime(LONG_TERM_EXIT_TIME)
-                        .setLeavingDate(LONG_TERM_EXIT_DATE)
+                        .setEntryTime(TIME_12)
+                        .setEntryDate(DATE_BY_1_DAY)
+                        .setLeavingTime(TIME_12)
+                        .setLeavingDate(DATE_BY_2_MONTHS)
                 ,ResponseDelayedBy);
         String cost = app.getSelectorService().getText(costSpanField);
         reportLog("Cost for one month: " + cost);
@@ -100,10 +99,10 @@ public class ParkingCalcPositiveTests extends TestBase {
         int ResponseDelayedBy = 1;
         app.getParkingCalcPage().selectALotFromDropdown(dropdownOption);
         app.getParkingCalcPage().fillOutTheInputFieldsAndClickCalculateButton(calcData
-                        .setEntryTime(LONG_TERM_ENTRY_TIME)
-                        .setEntryDate(LONG_TERM_ENTRY_DATE)
-                        .setLeavingTime(LONG_TERM_EXIT_TIME)
-                        .setLeavingDate(LONG_TERM_EXIT_DATE)
+                        .setEntryTime(TIME_12)
+                        .setEntryDate(DATE_BY_1_DAY)
+                        .setLeavingTime(TIME_12)
+                        .setLeavingDate(DATE_BY_2_MONTHS)
                 ,ResponseDelayedBy);
         String cost = app.getSelectorService().getText(costSpanField);
         reportLog("Cost for one month: " + cost);
@@ -119,10 +118,10 @@ public class ParkingCalcPositiveTests extends TestBase {
         int ResponseDelayedBy = 1;
         app.getParkingCalcPage().selectALotFromDropdown(dropdownOption);
         app.getParkingCalcPage().fillOutTheInputFieldsAndClickCalculateButton(calcData
-                        .setEntryTime(VALET_ENTRY_TIME)
-                        .setEntryDate(VALET_ENTRY_DATE)
-                        .setLeavingTime(VALET_EXIT_TIME)
-                        .setLeavingDate(VALET_EXIT_DATE)
+                        .setEntryTime(TIME_12)
+                        .setEntryDate(DATE_BY_1_DAY)
+                        .setLeavingTime(TIME_17)
+                        .setLeavingDate(DATE_BY_1_DAY)
                 ,ResponseDelayedBy);
         String cost = app.getSelectorService().getText(costSpanField);
         reportLog("Cost for five hours: " + cost);
@@ -131,23 +130,40 @@ public class ParkingCalcPositiveTests extends TestBase {
 
     @Priority(7)
     @Test(priority = 7)
-    public void checkDaysHoursAndMinutesTest() {
+    public void valetParkingForMoreThanFiveHrsTest() {
         log.info("");
-        reportLog("***** Check values of Days, Hours and Minutes *****");
-        int dropdownOption = 0; //Dropdown option 0 is 'Short-Term Parking'
+        reportLog("***** Check valet parking cost for more than five hours *****");
+        int dropdownOption = 4; //Dropdown option 4 is 'valet Parking'
         int ResponseDelayedBy = 1;
         app.getParkingCalcPage().selectALotFromDropdown(dropdownOption);
         app.getParkingCalcPage().fillOutTheInputFieldsAndClickCalculateButton(calcData
-                        .setEntryTime(ENTRY_TIME)
-                        .setEntryDate(ENTRY_DATE)
-                        .setLeavingTime(EXIT_TIME)
-                        .setLeavingDate(EXIT_DATE)
+                        .setEntryTime(TIME_12)
+                        .setEntryDate(DATE_BY_1_DAY)
+                        .setLeavingTime(TIME_17_01)
+                        .setLeavingDate(DATE_BY_1_DAY)
+                ,ResponseDelayedBy);
+        String cost = app.getSelectorService().getText(costSpanField);
+        reportLog("Cost for more than five hours: " + cost);
+        assertEquals(cost, "$ 18.00        (0 Days, 5 Hours, 1 Minutes)");
+    }
+
+    @Priority(8)
+    @Test(priority = 8)
+    public void checkDaysHoursAndMinutesTest() {
+        log.info("");
+        reportLog("***** Check values of Days, Hours and Minutes *****");
+        int dropdownOption = 2; //Dropdown option 2 is 'Long-term surface Parking'
+        int ResponseDelayedBy = 1;
+        app.getParkingCalcPage().selectALotFromDropdown(dropdownOption);
+        app.getParkingCalcPage().fillOutTheInputFieldsAndClickCalculateButton(calcData
+                        .setEntryTime(TIME_12_26)
+                        .setEntryDate(DATE_BY_1_DAY)
+                        .setLeavingTime(TIME_17_01)
+                        .setLeavingDate(DATE_BY_3_DAYS)
                 ,ResponseDelayedBy);
         String cost = app.getSelectorService().getText(costSpanField);
         reportLog("All the values in cost field: " + cost);
-        assertEquals(cost, "$ 55.00        (2 Days, 3 Hours, 16 Minutes)");
+        assertEquals(cost, "$ 42.00        (2 Days, 4 Hours, 35 Minutes)");
     }
-
-
 }
 

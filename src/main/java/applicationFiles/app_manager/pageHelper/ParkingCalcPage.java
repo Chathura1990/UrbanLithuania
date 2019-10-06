@@ -40,7 +40,7 @@ public class ParkingCalcPage extends SelectorService {
         type(exitDateInputField,calc.getLeavingDate());
     }
 
-    public void clickCalculateButtonWithRespDelayedBy(int milliseconds){
+    private void clickCalculateButtonWithRespDelayedBy(int milliseconds){
         click(xpath("//form[@class='BodyCopy']/input["+milliseconds+"]"),"radio button");
         click(calculateButton, "[Calculate] button");
     }

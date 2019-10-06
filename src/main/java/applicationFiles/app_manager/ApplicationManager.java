@@ -12,7 +12,6 @@ import org.testng.Reporter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import static applicationFiles.framework.globalParameters.GlobalParameters.*;
 import static java.lang.Thread.sleep;
@@ -54,8 +53,8 @@ public class ApplicationManager {
             System.setProperty("webdriver.chrome.driver", Parameters.instance().getChromeDriverWin());
         } else if (OS.startsWith("linux")) {
             System.setProperty("webdriver.chrome.driver", Parameters.instance().getChromeDriverLin());// or insert this path 'usr/local/bin/chromedriver'
-                chromeOptions.addArguments("--headless");
         }
+
         // Set max. dimensions of the browser window
         chromeOptions.addArguments("window-size=1920,1080");
 
@@ -75,7 +74,7 @@ public class ApplicationManager {
     }
 
     public void stop() throws InterruptedException {
-        sleep(4000);
+        sleep(LONG_SLEEP_SEC);
         driver.quit();
     }
 
