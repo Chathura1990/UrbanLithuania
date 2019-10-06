@@ -6,6 +6,7 @@ For logging purpose: log4j <br>
 Testing Framework: TestNG <br>
 Tested on: Chrome browser. <br>
 All the tests are in: src\main\java\applicationFiles\testFiles
+Run this file: src\main\resources\suite1.xml
 
 
 
